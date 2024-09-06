@@ -18,8 +18,6 @@
   * Clone the repository to your local machine using the command:
    git clone https://github.com/ayahae79/dots-and-boxes.git
   * Open the index.html file in your preferred web browser to start playing.
-
-
  The project itself was deployed and can be viewed [here](http://www.duckduckgo.com).
  ***
  ### ***Screenshots***
@@ -27,8 +25,6 @@
 
  ***
  ### ***Future Updates***
- - [ ] Initial game board design
- - [ ] Score tracking 
  - [ ] Add multiplayer support
  - [ ] Added basic AI for computer opponent
 

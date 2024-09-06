@@ -1,0 +1,96 @@
+/* General layout */
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #f0f8ff;
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  height: 100vh;
+}
+
+header {
+  width: 100vw;
+  background-color: #3b5998;
+  color: white;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.top-menu {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-right: 40px;
+  margin-left: 40px;
+}
+
+.menu-options button {
+  background-color: #6d84b4;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  margin: 0 10px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+.menu-options button:hover {
+  background-color: #a1a9b9;
+  color: black;
+}
+main {
+  width: 100%;
+  height: 90vh;
+}
+.game-wrapper {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  height: 70vh;
+  padding: 20px;
+}
+
+.player-panel {
+  background-color: #f8f9fa;
+  border-radius: 10px;
+  padding: 20px;
+  width: 20%;
+  text-align: center;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+.player-avatar.material-symbols-outlined {
+  margin-top: 50px;
+  font-size: 10vw;
+  line-height: 48px;
+}
+.player-panel.player1 {
+  color: #d80032;
+}
+.player-panel.player2 {
+  color: #003049;
+}
+
+.board {
+  width: 50%;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-gap: 10px;
+  padding: 20px;
+  margin-right: 10px;
+  margin-left: 10px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+footer {
+  width: 100%;
+  text-align: center;
+}
+
+footer h2 {
+  color: #669bbc;
+}
