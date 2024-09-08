@@ -44,10 +44,13 @@ const switchPlayer = () => {
 const handleLineClick = (event) => {
   const line = event.target
   line.style.backgroundColor = currentPlayer === 1 ? "#d80032" : " #003049"
-  console.log(line.id) // Access id with lowercase 'i'
+  console.log(line.id)
   line.removeEventListener("click", handleLineClick)
   switchPlayer()
 }
+const checkForBox = (line) => {}
+const checkForGameEnd = () => {}
+const resetGame = () => {}
 
 createBoard()
 // Event Listeners
