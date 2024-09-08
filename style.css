@@ -76,9 +76,11 @@ main {
 .board {
   width: 50%;
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  grid-gap: 10px;
-  padding: 20px;
+  grid-template-columns: repeat(9, 40px);
+  grid-template-rows: repeat(9, 40px);
+  gap: 10px;
+  justify-content: center;
+  padding-top: 30px;
   margin-right: 10px;
   margin-left: 10px;
   background-color: #ffffff;
@@ -86,6 +88,35 @@ main {
   box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
 }
 
+.dot {
+  width: 15px;
+  height: 15px;
+  background-color: #383059;
+  border-radius: 50%;
+  margin: auto;
+}
+
+.horizontal-line,
+.vertical-line {
+  background-color: lightgray;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.horizontal-line {
+  width: 40px;
+  height: 5px;
+}
+
+.vertical-line {
+  width: 5px;
+  height: 40px;
+}
+
+.horizontal-line:hover,
+.vertical-line:hover {
+  background-color: #4a3e7c;
+}
 footer {
   width: 100%;
   text-align: center;
