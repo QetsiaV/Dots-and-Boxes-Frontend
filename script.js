@@ -1,184 +1,120 @@
-// Global Variables
-const board = document.querySelector(".board")
-const gridSize = 5
 let currentPlayer = 1
-let player = document.querySelector("#game-status-message")
-let lines = []
-let lineIndex = 0
-let score1 = 0
-let score2 = 0
-let player1Score = document.querySelector("#player1-score")
-let player2Score = document.querySelector("#player2-score")
-let completedBoxes = []
-let reset = document.querySelector("#restart-btn")
+let playerColors = ["#FF0080", "#0080FF"]
+let player1Score = 0
+let player2Score = 0
+let board = document.querySelector(".board")
+let resetbtn = document.querySelector("#restart-btn")
 
-// Functions For Game Logic
+// Create a static 5x5 board with boxes
 const createBoard = () => {
-  // Loop to create dots and lines
-  for (let row = 0; row < 9; row++) {
-    for (let col = 0; col < 9; col++) {
-      if (row % 2 === 0 && col % 2 === 0) {
-        // Create a dot
-        const dot = document.createElement("div")
-        dot.classList.add("dot")
-        board.appendChild(dot)
-      } else if (row % 2 === 0 && col % 2 === 1) {
-        // Create a horizontal line
-        createLineElement("horizontal-line", lineIndex)
-        lineIndex++
-      } else if (row % 2 === 1 && col % 2 === 0) {
-        // Create a vertical line
-        createLineElement("vertical-line", lineIndex)
-        lineIndex++
-      } else {
-        const emptySpace = document.createElement("div")
-        emptySpace.classList.add("empty-space")
-        board.appendChild(emptySpace)
-      }
-    }
-  }
-}
+  for (let i = 0; i < 25; i++) {
+    // 5x5 = 25 boxes
+    let box = document.createElement("div")
+    box.classList.add("box")
 
-const createLineElement = (type, lineIndex) => {
-  const line = document.createElement("div")
-  line.classList.add(type)
-  line.index = lineIndex
-  line.addEventListener("click", (event) =>
-    handleLineClick(event, type, lineIndex)
-  )
-  board.appendChild(line)
-}
-
-const switchPlayer = () => {
-  currentPlayer = currentPlayer === 1 ? 2 : 1
-  player.innerText = `Player ${currentPlayer}'s Turn`
-}
-
-const handleLineClick = (event) => {
-  const line = event.target
-  const type = line.classList.contains("horizontal-line")
-    ? "horizontal-line"
-    : "vertical-line"
-  const lineIndex = line.index
-  console.log(lineIndex)
-  if (lines[lineIndex]) return
-  line.style.backgroundColor = currentPlayer === 1 ? "#d80032" : "#003049"
-  line.removeEventListener("click", handleLineClick)
-  lines[lineIndex] = true
-  const boxCompleted = checkForBox(lineIndex, type)
-  if (!boxCompleted) {
-    switchPlayer()
-  } else {
-    checkForGameEnd()
-  }
-}
-
-const checkForBox = (lineIndex, type) => {
-  let boxLines = []
-  let boxCompleted = false
-
-  if (type === "horizontal-line") {
-    const isTopRow = Math.floor(lineIndex / 9) === 0
-    const isBottomRow = Math.floor(lineIndex / 9) === gridSize - 1
-
-    boxLines = [
-      ...(isTopRow
-        ? []
-        : [[lineIndex, lineIndex - 4, lineIndex - 5, lineIndex - 9]]),
-      ...(isBottomRow
-        ? []
-        : [[lineIndex, lineIndex + 4, lineIndex + 5, lineIndex + 9]]),
-    ]
-  } else if (type === "vertical-line") {
-    const isLeftColumn = lineIndex % 9 === 0
-    const isRightColumn = lineIndex % 9 === 8
-
-    boxLines = [
-      ...(isLeftColumn
-        ? []
-        : [[lineIndex, lineIndex - 1, lineIndex - 5, lineIndex + 4]]),
-      ...(isRightColumn
-        ? []
-        : [[lineIndex, lineIndex + 1, lineIndex + 5, lineIndex - 4]]),
-    ]
-  }
-
-  for (const box of boxLines) {
-    // Sort the indices to ensure consistent order
-    const sortedBox = box.slice().sort((a, b) => a - b)
-    const boxString = sortedBox.join("-")
-
-    if (!completedBoxes.includes(boxString)) {
-      if (box.every((index) => lines[index])) {
-        changeScore()
-        console.log("Box is completed!")
-        completedBoxes.push(boxString) // Mark this box as completed
-        boxCompleted = true
-      }
-    }
-  }
-
-  return boxCompleted
-}
-
-const changeScore = () => {
-  if (currentPlayer === 1) {
-    score1 += 10
-    player1Score.innerText = score1
-  } else {
-    score2 += 10
-    player2Score.innerText = score2
-  }
-}
-
-const checkForGameEnd = () => {
-  if (completedBoxes.length === 16) {
-    if (score1 > score2) {
-      player.innerText = `Player 1 wins!`
-    } else if (score1 < score2) {
-      player.innerText = `Player 2 wins!`
-    } else {
-      player.innerText = `Tie! Try again`
-    }
-  }
-}
-const resetGame = () => {
-  // Clear completed boxes
-  completedBoxes = []
-
-  // Reset scores
-  score1 = 0
-  score2 = 0
-  player1Score.innerText = score1
-  player2Score.innerText = score2
-
-  // Reset the lines array
-  lines = []
-
-  // Reset the board
-  document
-    .querySelectorAll(".horizontal-line, .vertical-line")
-    .forEach((line) => {
-      line.style.backgroundColor = ""
-      line.addEventListener("click", (event) =>
-        handleLineClick(
-          event,
-          line.classList.contains("horizontal-line")
-            ? "horizontal-line"
-            : "vertical-line",
-          line.index
-        )
-      )
+    // Add four lines to each box (top, bottom, left, right)
+    ;["top", "bottom", "left", "right"].forEach((type) => {
+      const line = document.createElement("div")
+      line.classList.add("line", `${type}-line`)
+      line.style.backgroundColor = "lightgray"
+      line.addEventListener("click", handlelineClick)
+      box.appendChild(line)
     })
 
-  // Set the initial player
-  currentPlayer = 1
-  player.innerText = `Player ${currentPlayer}'s Turn`
-
-  // Optionally hide/reset any additional UI elements
-  // Example: document.querySelector("#reset-button").style.display = "none"
+    board.appendChild(box)
+  }
 }
 
-createBoard()
+// Track which lines are clicked and check if a box is completed
+const handlelineClick = (event) => {
+  let line = event.target
+  if (line.style.backgroundColor !== "lightgray") return //if its clicked not click it again
 
-reset.addEventListener("click", resetGame)
+  line.style.backgroundColor = currentPlayer === 1 ? "#FF0080" : "#0080FF"
+
+  // Check if the box is completed (all 4 lines clicked)
+  let box = line.parentElement
+  let alllines = box.querySelectorAll(".line")
+  let allClicked = Array.from(alllines).every(
+    (line) => line.style.backgroundColor !== "lightgray"
+  )
+
+  if (allClicked) {
+    let boxColor = currentPlayer === 1 ? "#FF0080" : "#0080FF"
+    box.style.backgroundColor = boxColor
+    alllines.forEach((e) => (e.style.backgroundColor = "white"))
+    updateScore()
+  } else {
+    // Switch to the next player
+    switchPlayer()
+  }
+  checkEndGame()
+}
+
+// const to switch between players
+const switchPlayer = () => {
+  currentPlayer = currentPlayer === 1 ? 2 : 1
+  document.getElementById(
+    "game-status-message"
+  ).innerText = `Player ${currentPlayer}'s Turn`
+}
+
+const updateScore = () => {
+  let score = currentPlayer === 1 ? (player1Score += 10) : (player2Score += 10)
+  document.getElementById(`player${currentPlayer}-score`).innerText = score
+}
+
+const resetGame = () => {
+  player1Score = 0
+  player2Score = 0
+  document.getElementById("player1-score").innerText = player1Score
+  document.getElementById("player2-score").innerText = player2Score
+  currentPlayer = 1
+  document.getElementById(
+    "game-status-message"
+  ).innerText = `Player ${currentPlayer}'s Turn`
+  document.querySelectorAll(".box").forEach((box) => {
+    box.style.backgroundColor = "white"
+
+    box.querySelectorAll(".line").forEach((line) => {
+      line.style.backgroundColor = "lightgray"
+    })
+  })
+}
+
+const checkEndGame = () => {
+  // Get all boxes
+  const boxes = document.querySelectorAll(".box")
+
+  // Variable to track if all boxes are completed
+  let allBoxesCompleted = true
+
+  // Check if each box is completed
+  boxes.forEach((box) => {
+    if (
+      box.style.backgroundColor === "" ||
+      box.style.backgroundColor === "white"
+    ) {
+      allBoxesCompleted = false
+    }
+  })
+
+  if (allBoxesCompleted) {
+    // Determine the winner based on scores
+    let winner
+    if (player1Score > player2Score) {
+      winner = "Player 1 Wins!"
+    } else if (player2Score > player1Score) {
+      winner = "Player 2 Wins!"
+    } else {
+      winner = "It's a Draw!"
+    }
+
+    // Display the result
+    document.getElementById("game-status-message").innerText = winner
+  }
+}
+
+// Initialize the board
+createBoard()
+resetbtn.addEventListener("click", resetGame)
