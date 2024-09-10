@@ -7,10 +7,32 @@
 body {
   font-family: Arial, sans-serif;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background-color: #f0f0f0;
+  background-color: #000000;
+  color: #fff;
+  position: relative;
+}
+
+h1 {
+  font-family: "Raleway Dots", sans-serif;
+  font-size: 5rem;
+}
+#dots {
+  color: #ff0080;
+}
+
+#boxes {
+  color: #0080ff;
+}
+.top-menu {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0 20px;
 }
 
 .game-wrapper {
@@ -22,55 +44,85 @@ body {
 
 .board {
   display: grid;
-  grid-template-columns: repeat(5, 100px); /* 5x5 boxes */
+  grid-template-columns: repeat(5, 100px);
   grid-template-rows: repeat(5, 100px);
   gap: 0;
+  margin: 50px;
 }
 
 .box {
   position: relative;
   background-color: white;
-  border: 2px solid transparent;
-  box-sizing: border-box;
+  border: 2px solid #ddd;
+  width: 100px;
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.box .line {
+.top-left {
+  top: 4px;
+  left: 4px;
+}
+
+.top-right {
+  top: 4px;
+  right: 4px;
+}
+
+.bottom-left {
+  bottom: 4px;
+  left: 4px;
+}
+
+.bottom-right {
+  bottom: 4px;
+  right: 4px;
+}
+
+/* Line Styles */
+.line {
   position: absolute;
   background-color: lightgray;
   cursor: pointer;
+  z-index: 1;
 }
 
-.box .line:hover {
-  background-color: gray;
-}
-
-/* Define the four lines */
-.box .top-line {
+/* Top line */
+.top-line {
   top: 0;
-  left: 0;
-  height: 4px;
-  width: 100%;
+  left: 5px;
+  right: 5px;
+  height: 6px; /* Increased thickness */
 }
 
-.box .bottom-line {
+/* Bottom line */
+.bottom-line {
   bottom: 0;
-  left: 0;
-  height: 4px;
-  width: 100%;
+  left: 5px;
+  right: 5px;
+  height: 6px; /* Increased thickness */
 }
 
-.box .left-line {
-  top: 0;
+/* Left line */
+.left-line {
+  top: 5px;
+  bottom: 5px;
   left: 0;
-  height: 100%;
-  width: 4px;
+  width: 6px; /* Increased thickness */
 }
 
-.box .right-line {
-  top: 0;
+/* Right line */
+.right-line {
+  top: 5px;
+  bottom: 5px;
   right: 0;
-  height: 100%;
-  width: 4px;
+  width: 6px; /* Increased thickness */
+}
+
+.line:hover {
+  background-color: gray; /* Add hover effect */
 }
 
 .player-panel {
@@ -84,4 +136,109 @@ body {
 footer {
   margin-top: 20px;
   text-align: center;
+}
+
+#restart-btn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  padding: 10px 20px;
+  background-color: #ff0080;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1em;
+}
+
+#restart-btn:hover {
+  background-color: #0080ff;
+}
+
+/* From Uiverse.io by ElSombrero2 */
+.card {
+  overflow: visible;
+  width: 190px;
+  height: 254px;
+}
+
+.content {
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform 300ms;
+  box-shadow: 0px 0px 10px 1px #393939ee;
+  border-radius: 5px;
+}
+
+.back1,
+.back2 {
+  background-color: #393939ee;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.back1::before {
+  position: absolute;
+  content: " ";
+  display: block;
+  width: 160px;
+  height: 160%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    #ff0080,
+    #ff0080,
+    #ff0080,
+    #ff0080,
+    transparent
+  );
+  animation: rotation_481 5000ms infinite linear;
+}
+.back2::before {
+  position: absolute;
+  content: " ";
+  display: block;
+  width: 160px;
+  height: 160%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    #0080ff,
+    #0080ff,
+    #0080ff,
+    #0080ff,
+    transparent
+  );
+  animation: rotation_481 5000ms infinite linear;
+}
+
+.back-content {
+  position: absolute;
+  width: 99%;
+  height: 99%;
+  background-color: #151515;
+  border-radius: 5px;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+}
+
+@keyframes rotation_481 {
+  0% {
+    transform: rotateZ(0deg);
+  }
+
+  0% {
+    transform: rotateZ(360deg);
+  }
 }
