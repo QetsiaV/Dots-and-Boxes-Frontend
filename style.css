@@ -14,10 +14,9 @@ body {
   background-color: #000000;
   color: #fff;
   position: relative;
+  font-family: "Cabin Sketch", sans-serif;
 }
-
 h1 {
-  font-family: "Raleway Dots", sans-serif;
   font-size: 5rem;
 }
 #dots {
@@ -43,118 +42,56 @@ h1 {
 }
 
 .board {
+  background-color: #fff;
+  width: 50%;
   display: grid;
-  grid-template-columns: repeat(5, 100px);
-  grid-template-rows: repeat(5, 100px);
-  gap: 0;
-  margin: 50px;
-}
-
-.box {
-  position: relative;
-  background-color: white;
-  border: 2px solid #ddd;
-  width: 100px;
-  height: 100px;
-  display: flex;
+  grid-template-columns: repeat(9, 30px);
+  grid-template-rows: repeat(9, 30px);
+  gap: 10px;
   justify-content: center;
-  align-items: center;
+  padding: 40px;
+  margin-right: 10px;
+  margin-left: 10px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+}
+.dot {
+  width: 15px;
+  height: 15px;
+  background-color: #383059;
+  border-radius: 50%;
+  margin: auto;
 }
 
-/* .top-left {
-  top: 4px;
-  left: 4px;
-}
-
-.top-right {
-  top: 4px;
-  right: 4px;
-}
-
-.bottom-left {
-  bottom: 4px;
-  left: 4px;
-}
-
-.bottom-right {
-  bottom: 4px;
-  right: 4px;
-}
-
-/* Line Styles */
-.line {
-  position: absolute;
+.horizontal-line,
+.vertical-line {
   background-color: lightgray;
   cursor: pointer;
-  z-index: 1;
+  transition: background-color 0.3s;
 }
 
-/* Top line */
-.top-line {
-  top: 0;
-  left: 5px;
-  right: 5px;
-  height: 6px; /* Increased thickness */
+.horizontal-line {
+  width: 40px;
+  height: 5px;
+  margin-top: 10px;
 }
 
-/* Bottom line */
-.bottom-line {
-  bottom: 0;
-  left: 5px;
-  right: 5px;
-  height: 6px; /* Increased thickness */
+.vertical-line {
+  width: 5px;
+  height: 40px;
+  margin-left: 12px;
 }
 
-/* Left line */
-.left-line {
-  top: 5px;
-  bottom: 5px;
-  left: 0;
-  width: 6px; /* Increased thickness */
-}
-
-/* Right line */
-.right-line {
-  top: 5px;
-  bottom: 5px;
-  right: 0;
-  width: 6px; /* Increased thickness */
-}
-*/ .line:hover {
-  background-color: gray; /* Add hover effect */
+.horizontal-line:hover,
+.vertical-line:hover {
+  background-color: #4a3e7c;
 }
 
 .player-panel {
   text-align: center;
 }
 
-.player-avatar {
-  font-size: 48px;
-}
-
-footer {
-  margin-top: 20px;
-  text-align: center;
-}
-
-#restart-btn {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  padding: 10px 20px;
-  background-color: #ff0080;
-  color: #fff;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 1em;
-}
-
-#restart-btn:hover {
-  background-color: #0080ff;
-}
-
-/* From Uiverse.io by ElSombrero2 */
 .card {
   overflow: visible;
   width: 190px;
@@ -240,4 +177,177 @@ footer {
   0% {
     transform: rotateZ(360deg);
   }
+}
+
+footer {
+  text-align: center;
+  font-size: 2em;
+}
+#restart-btn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  padding: 20px; /* Adjust padding if needed */
+  color: #ff0080;
+  background-color: transparent;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 2em; /* Optional, adjust if button size needs to match */
+}
+
+#restart-btn:hover {
+  color: #b8005c;
+}
+
+.material-symbols-outlined {
+  font-size: 1.2em !important; /* Increase as needed */
+}
+
+/* Line Styles */
+.line {
+  position: absolute;
+  background-color: lightgray;
+  cursor: pointer;
+  z-index: 1;
+}
+
+/* Top line */
+.top-line {
+  top: 0;
+  left: 5px;
+  right: 5px;
+  height: 6px; /* Increased thickness */
+}
+
+/* Bottom line */
+.bottom-line {
+  bottom: 0;
+  left: 5px;
+  right: 5px;
+  height: 6px; /* Increased thickness */
+}
+
+/* Left line */
+.left-line {
+  top: 5px;
+  bottom: 5px;
+  left: 0;
+  width: 6px; /* Increased thickness */
+}
+
+/* Right line */
+.right-line {
+  top: 5px;
+  bottom: 5px;
+  right: 0;
+  width: 6px; /* Increased thickness */
+}
+.line:hover {
+  background-color: gray; /* Add hover effect */
+}
+
+/* Empty space that will turn into a completed box */
+.box {
+  width: 30px;
+  height: 30px;
+  background-color: transparent;
+  transition: background-color 0.3s;
+}
+
+.box.completed-player1 {
+  background-color: #ff0080;
+}
+
+.box.completed-player2 {
+  background-color: #0080ff;
+}
+/* Box shadow for the active player */
+.player-active {
+  box-shadow: 0px 0px 20px 10px rgba(255, 0, 128, 0.6); /* Pink shadow for Player 1 */
+}
+
+.player-active-2 {
+  box-shadow: 0px 0px 20px 10px rgba(0, 128, 255, 0.6); /* Blue shadow for Player 2 */
+}
+
+/* Home Page Styling */
+.home-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 80vh;
+  text-align: center;
+}
+
+.home-content {
+  background-color: #ffffff;
+  padding: 40px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+  width: 50%;
+}
+
+.home-content h2 {
+  font-size: 3rem;
+  color: #ff0080;
+  margin-bottom: 20px;
+}
+
+.home-content p {
+  font-size: 1.5rem;
+  color: #383059;
+  margin-bottom: 30px;
+}
+
+.play-btn {
+  padding: 15px 30px;
+  font-size: 1.5rem;
+  background-color: #0080ff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.play-btn:hover {
+  background-color: #0056b3;
+}
+
+/* Input fields for player names */
+.name-inputs {
+  margin-bottom: 30px;
+}
+
+.name-inputs label {
+  font-size: 1.2rem;
+  color: #383059;
+  margin-bottom: 10px;
+  display: block;
+}
+
+.name-inputs input {
+  padding: 10px;
+  font-size: 1.2rem;
+  width: 100%;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  border: 2px solid #0080ff;
+}
+
+.play-btn {
+  padding: 15px 30px;
+  font-size: 1.5rem;
+  background-color: #0080ff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.play-btn:hover {
+  background-color: #0056b3;
 }

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cabin+Sketch:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+  <script defer src="script.js"></script>
+  <title>Dots and Boxes</title>
+</head>
+
+<body>
+  <header>
+    <nav class="top-menu">
+      <h1><span id="dots">Dots</span> and <span id="boxes">Boxes</span></h1>
+      <div class="menu-options">
+        <button id="restart-btn"><span class="material-symbols-outlined player-avatar" id="player1"><span
+              class="material-symbols-outlined">
+              restart_alt
+            </span></span></button>
+      </div>
+    </nav>
+  </header>
+
+  <div class="game-wrapper">
+    <aside class="player-panel player1">
+      <!-- From Uiverse.io by ElSombrero2  -->
+      <div class="card">
+        <div class="content">
+          <div class="back1">
+            <div class="back-content">
+              <i class="fa-light fa-duck"></i>
+              <h2>Player 1</h2>
+              <h4>Score: <span id="player1-score">0</span></h4>
+            </div>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <div class="board"></div>
+
+    <aside class="player-panel player2">
+      <!-- From Uiverse.io by ElSombrero2  -->
+      <div class="card">
+        <div class="content">
+          <div class="back2">
+            <div class="back-content">
+              <h2>Player 2</h2>
+              <h4>Score: <span id="player2-score">0</span></h4>
+            </div>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+  </div>
+
+
+  <footer class="game-status">
+    <h2 id="game-status-message">Player 1's Turn</h2>
+  </footer>
+</body>
+
+</html>
