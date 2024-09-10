@@ -61,7 +61,7 @@ h1 {
   align-items: center;
 }
 
-.top-left {
+/* .top-left {
   top: 4px;
   left: 4px;
 }
@@ -120,8 +120,7 @@ h1 {
   right: 0;
   width: 6px; /* Increased thickness */
 }
-
-.line:hover {
+*/ .line:hover {
   background-color: gray; /* Add hover effect */
 }
 

@@ -106,7 +106,10 @@ const checkEndGame = () => {
   let allBoxesCompleted = true
 
   boxes.forEach((box) => {
-    if (box.style.backgroundColor === "white") {
+    if (
+      box.style.backgroundColor === "" ||
+      box.style.backgroundColor === "white"
+    ) {
       allBoxesCompleted = false
     }
   })
