@@ -4,15 +4,37 @@ let player1Score = 0
 let player2Score = 0
 let board = document.querySelector(".board")
 let resetbtn = document.querySelector("#restart-btn")
+let gridSize = 5
 
-// Create a static 5x5 board with boxes
+const createDot = () => {
+  const dot = document.createElement("div")
+  dot.classList.add("corner-dot")
+  return dot
+}
+
 const createBoard = () => {
-  for (let i = 0; i < 25; i++) {
-    // 5x5 = 25 boxes
+  for (let i = 0; i < gridSize * gridSize; i++) {
     let box = document.createElement("div")
     box.classList.add("box")
-
-    // Add four lines to each box (top, bottom, left, right)
+    ;["top-left", "top-right", "bottom-left", "bottom-right"].forEach(
+      (position) => {
+        const dot = createDot()
+        box.appendChild(dot)
+        if (position === "top-left") {
+          dot.style.top = "4px"
+          dot.style.left = "4px"
+        } else if (position === "top-right") {
+          dot.style.top = "4px"
+          dot.style.right = "4px"
+        } else if (position === "bottom-left") {
+          dot.style.bottom = "4px"
+          dot.style.left = "4px"
+        } else if (position === "bottom-right") {
+          dot.style.bottom = "4px"
+          dot.style.right = "4px"
+        }
+      }
+    )
     ;["top", "bottom", "left", "right"].forEach((type) => {
       const line = document.createElement("div")
       line.classList.add("line", `${type}-line`)
@@ -25,17 +47,15 @@ const createBoard = () => {
   }
 }
 
-// Track which lines are clicked and check if a box is completed
 const handlelineClick = (event) => {
   let line = event.target
-  if (line.style.backgroundColor !== "lightgray") return //if its clicked not click it again
+  if (line.style.backgroundColor !== "lightgray") return
 
   line.style.backgroundColor = currentPlayer === 1 ? "#FF0080" : "#0080FF"
 
-  // Check if the box is completed (all 4 lines clicked)
   let box = line.parentElement
   let alllines = box.querySelectorAll(".line")
-  let allClicked = Array.from(alllines).every(
+  let allClicked = [...alllines].every(
     (line) => line.style.backgroundColor !== "lightgray"
   )
 
@@ -45,13 +65,11 @@ const handlelineClick = (event) => {
     alllines.forEach((e) => (e.style.backgroundColor = "white"))
     updateScore()
   } else {
-    // Switch to the next player
     switchPlayer()
   }
   checkEndGame()
 }
 
-// const to switch between players
 const switchPlayer = () => {
   currentPlayer = currentPlayer === 1 ? 2 : 1
   document.getElementById(
@@ -83,24 +101,17 @@ const resetGame = () => {
 }
 
 const checkEndGame = () => {
-  // Get all boxes
   const boxes = document.querySelectorAll(".box")
 
-  // Variable to track if all boxes are completed
   let allBoxesCompleted = true
 
-  // Check if each box is completed
   boxes.forEach((box) => {
-    if (
-      box.style.backgroundColor === "" ||
-      box.style.backgroundColor === "white"
-    ) {
+    if (box.style.backgroundColor === "white") {
       allBoxesCompleted = false
     }
   })
 
   if (allBoxesCompleted) {
-    // Determine the winner based on scores
     let winner
     if (player1Score > player2Score) {
       winner = "Player 1 Wins!"
@@ -110,11 +121,9 @@ const checkEndGame = () => {
       winner = "It's a Draw!"
     }
 
-    // Display the result
     document.getElementById("game-status-message").innerText = winner
   }
 }
 
-// Initialize the board
 createBoard()
 resetbtn.addEventListener("click", resetGame)
