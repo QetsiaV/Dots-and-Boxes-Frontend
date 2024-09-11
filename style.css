@@ -50,8 +50,7 @@ h1 {
   gap: 10px;
   justify-content: center;
   padding: 40px;
-  margin-right: 10px;
-  margin-left: 10px;
+  margin: 40px;
   background-color: #ffffff;
   border-radius: 10px;
   box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
@@ -289,65 +288,110 @@ footer {
   width: 50%;
 }
 
-.home-content h2 {
+.home-back-content h2 {
   font-size: 3rem;
   color: #ff0080;
   margin-bottom: 20px;
 }
 
-.home-content p {
-  font-size: 1.5rem;
-  color: #383059;
-  margin-bottom: 30px;
-}
-
 .play-btn {
   padding: 15px 30px;
   font-size: 1.5rem;
-  background-color: #0080ff;
+  background-color: #ff0080;
   color: white;
   border: none;
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s;
+  text-decoration: none;
 }
 
 .play-btn:hover {
-  background-color: #0056b3;
+  background-color: #b8005c;
 }
 
-/* Input fields for player names */
-.name-inputs {
-  margin-bottom: 30px;
+.homecard {
+  overflow: visible;
+  width: 70%;
+  height: 50%;
 }
 
-.name-inputs label {
-  font-size: 1.2rem;
-  color: #383059;
-  margin-bottom: 10px;
-  display: block;
-}
-
-.name-inputs input {
-  padding: 10px;
-  font-size: 1.2rem;
+.homecontent {
   width: 100%;
-  margin-bottom: 20px;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform 300ms;
+  box-shadow: 0px 0px 10px 1px #393939ee;
   border-radius: 5px;
-  border: 2px solid #0080ff;
 }
 
-.play-btn {
-  padding: 15px 30px;
-  font-size: 1.5rem;
-  background-color: #0080ff;
+.homeback {
+  background-color: #393939ee;
+  color: #ff0080;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.homeback::before {
+  position: absolute;
+  content: " ";
+  display: block;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    #ff0080,
+    #ff0080,
+    #0080ff,
+    #0080ff,
+    transparent
+  );
+  animation: rotation_481 5000ms infinite linear;
+}
+
+.home-back-content {
+  position: absolute;
+  width: 99%;
+  height: 99%;
+  background-color: #151515;
+  border-radius: 5px;
   color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
 }
 
-.play-btn:hover {
-  background-color: #0056b3;
+/* Bounce and Glow Animation for Completed Boxes */
+@keyframes bounceGlow {
+  0% {
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+    transform: scale(1);
+  }
+  30% {
+    box-shadow: 0 0 30px rgba(255, 255, 255, 1);
+    transform: scale(1.2);
+  }
+  50% {
+    box-shadow: 0 0 40px rgba(255, 255, 255, 1);
+    transform: scale(1.3);
+  }
+  100% {
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+    transform: scale(1);
+  }
+}
+
+/* Apply the bounce and glow effect when a player completes a box */
+.box.completed-player1,
+.box.completed-player2 {
+  animation: bounceGlow 0.8s ease-out;
 }

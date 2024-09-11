@@ -1,27 +1,17 @@
-// Global Variables
+// Glopal Variables
 let currentPlayer = 1
-let player1Score = 0
-let player2Score = 0
+let score1 = 0
+let score2 = 0
 let totalBoxesCompleted = 0
 
-// Fetch player names from localStorage
-const player1Name = localStorage.getItem("player1Name") || "Player 1"
-const player2Name = localStorage.getItem("player2Name") || "Player 2"
-
 const board = document.querySelector(".board")
-const player1panel = document.querySelector("#player1-score")
-const player2panel = document.querySelector("#player2-score")
+const p1score = document.querySelector("#player1-score")
+const p2score = document.querySelector("#player2-score")
+const panel1 = document.querySelector(".player1") // Player 1 panel
+const panel2 = document.querySelector(".player2") // Player 2 panel
 const gameStatusElement = document.querySelector("#game-status-message")
 const restartBtn = document.querySelector("#restart-btn")
 const gridSize = 5
-
-// Selecting player panels for active shadow
-const player1Panel = document.querySelector(".player1") // Player 1 panel
-const player2Panel = document.querySelector(".player2") // Player 2 panel
-
-// Update the player names in the UI
-document.querySelector(".player1 h2").innerText = player1Name
-document.querySelector(".player2 h2").innerText = player2Name
 
 // Create the board (dots, lines, and boxes)
 const createBoard = () => {
@@ -51,6 +41,7 @@ const createBoard = () => {
       }
     }
   }
+  panel1.classList.add("player-active")
 }
 
 // Create a line element (either horizontal or vertical)
@@ -111,50 +102,61 @@ const checkForBoxCompletion = () => {
       // Update the score
       updateScore()
       totalBoxesCompleted++
+      boxCompleted = true
       checkForGameEnd()
-      boxCompleted = true // A box was completed
     }
   })
-  return boxCompleted
+
+  return boxCompleted // Return true if at least one box was completed
 }
 
 const updateScore = () => {
-  let score = currentPlayer === 1 ? (player1Score += 10) : (player2Score += 10)
-  document.getElementById(`player${currentPlayer}-score`).innerText = score
+  if (currentPlayer === 1) {
+    score1 += 10
+    p1score.innerText = score1
+  } else {
+    score2 += 10
+    p2score.innerText = score2
+  }
+  // Trigger box flash effect
+  const completedBoxes = document.querySelectorAll(
+    ".box[data-completed='true']"
+  )
+  completedBoxes.forEach((box) => {
+    box.classList.add("box-flash") // Add the class for the flash animation
+  })
 }
 
 // Switch the current player and update the UI with the active box shadow
 const switchPlayer = () => {
   // Remove the active class from both panels
-  player1Panel.classList.remove("player-active")
-  player2Panel.classList.remove("player-active-2")
+  panel1.classList.remove("player-active")
+  panel2.classList.remove("player-active-2")
 
   // Switch the current player
   currentPlayer = currentPlayer === 1 ? 2 : 1
-  gameStatusElement.innerText = `${
-    currentPlayer === 1 ? player1Name : player2Name
-  }'s Turn`
+  gameStatusElement.innerText = `Player ${currentPlayer}'s Turn`
 
   // Add the active class to the current player's panel
   if (currentPlayer === 1) {
-    player1Panel.classList.add("player-active")
+    panel1.classList.add("player-active")
   } else {
-    player2Panel.classList.add("player-active-2")
+    panel2.classList.add("player-active-2")
   }
 }
 
 // Reset the game
 const resetGame = () => {
   currentPlayer = 1
-  player1Score = 0
-  player2Score = 0
+  score1 = 0
+  score2 = 0
   totalBoxesCompleted = 0
 
-  player1panel.innerText = player1Score
-  player2panel.innerText = player2Score
-  gameStatusElement.innerText = `${player1Name}'s Turn`
-  player1Panel.classList.add("player-active")
-  player2Panel.classList.remove("player-active-2")
+  p1score.innerText = score1
+  p2score.innerText = score2
+  gameStatusElement.innerText = `Player 1's Turn`
+  panel1.classList.add("player-active")
+  panel2.classList.remove("player-active-2")
 
   createBoard()
 }
@@ -163,12 +165,18 @@ const checkForGameEnd = () => {
   const totalBoxes = (gridSize - 1) * (gridSize - 1) // Total number of boxes on the board
 
   if (totalBoxesCompleted === totalBoxes) {
-    if (player1Score > player2Score) {
-      gameStatusElement.innerText = `${player1Name} Wins!`
-    } else if (player2Score > player1Score) {
-      gameStatusElement.innerText = `${player2Name} Wins!`
+    if (score1 > score2) {
+      gameStatusElement.innerText = "Player 1 Wins!"
+      panel2.classList.remove("player-active-2")
+      panel1.classList.add("player-active")
+    } else if (score2 > score1) {
+      gameStatusElement.innerText = "Player 2 Wins!"
+      panel1.classList.remove("player-active")
+      panel2.classList.add("player-active-2")
     } else {
       gameStatusElement.innerText = "It's a Draw!"
+      panel1.classList.add("player-active")
+      panel2.classList.add("player-active-2")
     }
   }
 }

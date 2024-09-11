@@ -20,36 +20,17 @@
 
   <!-- Home Page Content -->
   <div class="home-wrapper">
-    <div class="home-content">
-      <h2>Welcome to Dots and Boxes!</h2>
-      <p>Enter your names to start the game:</p>
-
-      <div class="name-inputs">
-        <label for="player1-name">Player 1 Name:</label>
-        <input type="text" id="player1-name" placeholder="Player 1" />
-
-        <label for="player2-name">Player 2 Name:</label>
-        <input type="text" id="player2-name" placeholder="Player 2" />
+      <div class="homecard">
+        <div class="homecontent">
+          <div class="homeback">
+            <div class="home-back-content">
+            <h2>Welcome to Dots and Boxes!</h2>
+            <a id="play-btn" class="play-btn" href="game.html">Play Now</a>
+            </div>
+          </div>
+        </div>
       </div>
-
-      <button id="play-btn" class="play-btn">Play Now</button>
     </div>
-  </div>
-
-  <script>
-    // Capture player names and store them in localStorage
-    document.getElementById('play-btn').addEventListener('click', () => {
-      const player1Name = document.getElementById('player1-name').value || 'Player 1';
-      const player2Name = document.getElementById('player2-name').value || 'Player 2';
-
-      // Store player names in localStorage to access in the game page
-      localStorage.setItem('player1Name', player1Name);
-      localStorage.setItem('player2Name', player2Name);
-
-      // Redirect to the game page
-      window.location.href = 'game.html'; // Assuming your game page is in a separate file
-    });
-  </script>
 </body>
 
 </html>
