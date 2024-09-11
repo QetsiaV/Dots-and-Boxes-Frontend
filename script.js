@@ -10,8 +10,10 @@ const p2score = document.querySelector("#player2-score")
 const panel1 = document.querySelector(".player1") // Player 1 panel
 const panel2 = document.querySelector(".player2") // Player 2 panel
 const gameStatusElement = document.querySelector("#game-status-message")
+const winnerStatusElement = document.querySelector("#winner-status-message")
 const restartBtn = document.querySelector("#restart-btn")
 const gridSize = 5
+const winnerPanel = document.querySelector(".winner-panel")
 
 // Create the board (dots, lines, and boxes)
 const createBoard = () => {
@@ -157,6 +159,7 @@ const resetGame = () => {
   gameStatusElement.innerText = `Player 1's Turn`
   panel1.classList.add("player-active")
   panel2.classList.remove("player-active-2")
+  winnerPanel.style.display = "none"
 
   createBoard()
 }
@@ -165,18 +168,14 @@ const checkForGameEnd = () => {
   const totalBoxes = (gridSize - 1) * (gridSize - 1) // Total number of boxes on the board
 
   if (totalBoxesCompleted === totalBoxes) {
+    gameStatusElement.innerText = ""
+    winnerPanel.style.display = "block"
     if (score1 > score2) {
-      gameStatusElement.innerText = "Player 1 Wins!"
-      panel2.classList.remove("player-active-2")
-      panel1.classList.add("player-active")
+      winnerStatusElement.innerText = `Player ${currentPlayer}'s wins`
     } else if (score2 > score1) {
-      gameStatusElement.innerText = "Player 2 Wins!"
-      panel1.classList.remove("player-active")
-      panel2.classList.add("player-active-2")
+      winnerStatusElement.innerText = `Player ${currentPlayer}'s wins`
     } else {
-      gameStatusElement.innerText = "It's a Draw!"
-      panel1.classList.add("player-active")
-      panel2.classList.add("player-active-2")
+      winnerStatusElement.innerText = `its a tie`
     }
   }
 }
