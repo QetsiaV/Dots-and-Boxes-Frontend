@@ -10,7 +10,7 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  height: auto;
   background-color: #000000;
   color: #fff;
   position: relative;
@@ -272,12 +272,14 @@ footer {
 
 /* Home Page Styling */
 .home-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100vw;
-  height: 80vh;
-  text-align: center;
+  width: 100%;
+  height: 100%;
 }
 
 .home-content {
@@ -304,19 +306,20 @@ footer {
   cursor: pointer;
   transition: background-color 0.3s;
   text-decoration: none;
+  margin-top: 50px;
 }
 
 .play-btn:hover {
   background-color: #b8005c;
 }
 
-.homecard {
+.panel {
   overflow: visible;
-  width: 70%;
-  height: 50%;
+  width: 90%;
+  height: 70%;
 }
 
-.homecontent {
+.panelcontent {
   width: 100%;
   height: 100%;
   transform-style: preserve-3d;
@@ -325,7 +328,7 @@ footer {
   border-radius: 5px;
 }
 
-.homeback {
+.panelback {
   background-color: #393939ee;
   color: #ff0080;
   position: absolute;
@@ -338,7 +341,7 @@ footer {
   overflow: hidden;
 }
 
-.homeback::before {
+.panelback::before {
   position: absolute;
   content: " ";
   display: block;
@@ -356,7 +359,7 @@ footer {
   animation: rotation_481 5000ms infinite linear;
 }
 
-.home-back-content {
+.panel-back-content {
   position: absolute;
   width: 99%;
   height: 99%;
@@ -394,4 +397,17 @@ footer {
 .box.completed-player1,
 .box.completed-player2 {
   animation: bounceGlow 0.8s ease-out;
+}
+
+.winner-panel {
+  position: fixed;
+  top: 130px;
+  left: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  z-index: 1000;
+  display: none;
 }
