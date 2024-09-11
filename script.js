@@ -5,15 +5,15 @@ let score2 = 0
 let totalBoxesCompleted = 0
 
 const board = document.querySelector(".board")
-const p1score = document.querySelector("#player1-score")
-const p2score = document.querySelector("#player2-score")
+const p1score = document.querySelector("#player1-score") // Player 1 score inside the panel
+const p2score = document.querySelector("#player2-score") // Player 2 score inside the panel
 const panel1 = document.querySelector(".player1") // Player 1 panel
 const panel2 = document.querySelector(".player2") // Player 2 panel
 const gameStatusElement = document.querySelector("#game-status-message")
+const winnerPanel = document.querySelector(".winner-panel")
 const winnerStatusElement = document.querySelector("#winner-status-message")
 const restartBtn = document.querySelector("#restart-btn")
 const gridSize = 5
-const winnerPanel = document.querySelector(".winner-panel")
 
 // Create the board (dots, lines, and boxes)
 const createBoard = () => {
@@ -46,7 +46,7 @@ const createBoard = () => {
   panel1.classList.add("player-active")
 }
 
-// Create a line element (either horizontal or vertical)
+// Create a line element and add event listener on them
 const createLine = (type) => {
   const line = document.createElement("div")
   line.classList.add(type)
@@ -61,7 +61,7 @@ const handleLineClick = (event) => {
   // Check if the line has already been clicked
   if (line.style.backgroundColor) return
 
-  // Set the line color based on the current player
+  // Change the line color based on the current player
   line.style.backgroundColor = currentPlayer === 1 ? "#ff0080" : "#0080ff"
 
   // Check if a box was completed by this move
@@ -84,24 +84,24 @@ const checkForBoxCompletion = () => {
 
     // Check the four sides of the box
     const lines = [
-      box.previousElementSibling, // Left (vertical line)
-      box.nextElementSibling, // Right (vertical line)
+      box.previousElementSibling, // Left
+      box.nextElementSibling, // Right (
       box.parentElement.children[
         Array.from(box.parentElement.children).indexOf(box) - 9
-      ], // Top (horizontal line)
+      ], // Top
       box.parentElement.children[
         Array.from(box.parentElement.children).indexOf(box) + 9
-      ], // Bottom (horizontal line)
+      ], // Bottom
     ]
 
-    // If all four sides are filled, mark the box as completed
+    // If all four sides are true, the box is completed
     if (lines.every((line) => line && line.style.backgroundColor)) {
       box.dataset.completed = "true"
       box.classList.add(
         currentPlayer === 1 ? "completed-player1" : "completed-player2"
       )
 
-      // Update the score
+      // handel after the box completetion
       updateScore()
       totalBoxesCompleted++
       boxCompleted = true
@@ -109,9 +109,10 @@ const checkForBoxCompletion = () => {
     }
   })
 
-  return boxCompleted // Return true if at least one box was completed
+  return boxCompleted
 }
 
+//Update the score when one box or more completed
 const updateScore = () => {
   if (currentPlayer === 1) {
     score1 += 10
@@ -120,12 +121,12 @@ const updateScore = () => {
     score2 += 10
     p2score.innerText = score2
   }
-  // Trigger box flash effect
+  // Add the class for the animation for the completed box
   const completedBoxes = document.querySelectorAll(
     ".box[data-completed='true']"
   )
   completedBoxes.forEach((box) => {
-    box.classList.add("box-flash") // Add the class for the flash animation
+    box.classList.add("box-flash")
   })
 }
 
@@ -163,23 +164,23 @@ const resetGame = () => {
 
   createBoard()
 }
-
+// Check if the game ends
 const checkForGameEnd = () => {
-  const totalBoxes = (gridSize - 1) * (gridSize - 1) // Total number of boxes on the board
+  const totalBoxes = (gridSize - 1) * (gridSize - 1)
 
   if (totalBoxesCompleted === totalBoxes) {
     gameStatusElement.innerText = ""
     winnerPanel.style.display = "block"
     if (score1 > score2) {
-      winnerStatusElement.innerText = `Player ${currentPlayer}'s wins`
+      winnerStatusElement.innerText = `Player 1 dominates with ${score1} points!`
     } else if (score2 > score1) {
-      winnerStatusElement.innerText = `Player ${currentPlayer}'s wins`
+      winnerStatusElement.innerText = `Player 2 takes the lead with ${score2} points`
     } else {
-      winnerStatusElement.innerText = `its a tie`
+      winnerStatusElement.innerText = `It's a tie! Both players did amazing! `
     }
   }
 }
 
-// Initialize the game
+// Event listener
 createBoard()
 restartBtn.addEventListener("click", resetGame)
