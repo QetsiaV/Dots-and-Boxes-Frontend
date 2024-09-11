@@ -12,6 +12,7 @@
  * HTML
  * CSS
  * JavaScript
+ * Surge
  ***
  ### ***Getting Started***
   * Clone the repository to your local machine using the command:
